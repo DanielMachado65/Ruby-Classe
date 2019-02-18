@@ -124,3 +124,190 @@ O `Ruby` pode conter:
     5. Hash  - chave e valor entre chaves, com virgula ou da representação: `=>`
     
     6. Ranges(*intervalo*) - conjunto de valores com início ou fim. Os intervalos podem ser construídos usando `s..e` ou `Range.new`
+ 
+ 8. ### Hashes
+      Aceitam um conjunto `chave-valor`;
+      ```ruby
+      config = Hash.new
+      config['porta'] = 80
+      config['ssh'] = false
+      config['server'] = "Caelum.com.br"
+      ```
+ 9.  ### Array 
+
+
+### Attr_acessor:
+
+um atalho para crião de métodos de leitura e escrita para as classes, exemplo:
+
+```ruby
+class Pessoa
+end 
+
+pessoa = Pessoa.new
+pessoa.nome
+# NoMethodError: undifened method 'nome'
+
+class Pessoa
+   attr_accessor :nome
+end
+
+pessoa = Pessoa.new
+pessoa.nome
+# nil
+
+```
+
+### Métodos(Função)
+
+Como ruby, é uma linguagem OO completamente, você ouvira mais o nome método do que função normalmente. Enfim sua declaração é:
+
+```ruby
+def exemplo(param)
+   # code
+end
+```
+
+Para trabalhar com classes é mais ou menos alguma coisa parecida com: 
+
+```ruby
+class Exemplo
+   def exemplo.faz(alguma_coisa)
+      p 'Foi passado para essse método' + alguma_coisa
+   end
+end
+```
+
+
+lembrando que não precisa escrever o `return` normalmente declarado em outras linguagens, exemplo: 
+
+```ruby
+# ruído de código
+def method(params)
+   return params*params
+end
+
+# pode ser definido como
+def method(params)
+   params*params
+end
+```
+
+há possibilidade de chamar o método atrás do método `send`, exemplo: 
+
+```ruby
+pessoa.send(:nome_metodo, variáveis)
+```
+
+
+### Classes
+
+Como foi já tratado ao longo do arquivo é assim que define uma classe:
+
+```ruby
+class NomeClasse < ExtendeAlgumaClasse
+   
+   # constructo 
+   def iniciatlize(params)
+      @params = params
+   end
+
+   # método normal da classe
+   def method(params)
+   end
+
+   # método estático
+   def self.method(params)
+   end
+
+   # método privado
+   private
+   def method(params)
+   end
+end
+```
+
+Algumas convenções: 
+
+```ruby
+class Pessoa
+   def nome #acessor
+      @nome
+   end
+
+   def nome=(novo_nome)
+      @nome  = novo_nome
+   end
+end
+```
+
+* ### Syntax Sugar
+   O que seria uma simples **atribuição** passa para ser uma chamada de método
+   
+   ```ruby
+   # antigamente
+   pessoa.nome=("Novo nome")
+
+   # novo
+   pessoa.nome = "Novo nome"
+   ```
+* ### `&` - passando código, como parâmetro
+   
+   O que acontece é que passamos um pedaço de código, que queremos executar:
+
+   ```ruby
+   ## código que vamos passar
+   banco.status do | saldo_parcial |
+      p saldo_parcial
+   end
+   ```
+
+   como vai ser executada: 
+
+   ```ruby
+   class Banco
+      def status(&block)
+         saldo = 0
+         for conta in @contas
+            saldo += contas
+            
+            if block_given?
+               block.call(saldo)
+            end
+         end
+         saldo
+      end
+   end
+   ```
+
+   podemos usar ainda o uso de `chaves`:
+
+   ```ruby
+   banco.status { | saldo_parcial | puts saldo_parcial }
+   ```
+
+   podemos chamar atrás do **yield**
+
+   ```ruby
+   if block_given?
+      yield(saldo)
+   end
+   ```
+
+   para entedimento melhor: 
+
+   ```ruby
+   funcionario = ["Gui", "Tope"]
+   nomes_maisculas = funcionarios.cria_uma_array do | nome |
+      nome.upcase
+   end
+
+   class Array
+      def cria_uma_array
+         array = []
+         self.each do |elemento|
+            array << yield(elemento)
+         end
+      end  
+   end
+   ```
