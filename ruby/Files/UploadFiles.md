@@ -43,3 +43,4 @@ end
   * por padrão o **Rails** ele é contra o CSRF (Cross Site Request Forgery). Para todo o fórmulario ele gera um `token`. 
   * Isso faz com que evite os formulários de fora do seu site possam enviar dados ao seu aplicativo. 
 
+------------------
