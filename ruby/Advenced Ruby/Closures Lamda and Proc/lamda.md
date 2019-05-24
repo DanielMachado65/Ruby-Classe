@@ -26,6 +26,8 @@ puts_lambda = -> { |msg| puts "#{msg}" }
 
 ### Another Types of __call__
 
+Isso é conhecido como uma adição na versão: `1.9` de Ruby, o que trás conceitos de `Stabby Lamdas`.
+
 ```ruby
 say_something.call
 say_something.()
